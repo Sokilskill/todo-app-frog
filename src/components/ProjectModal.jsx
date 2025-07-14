@@ -2,7 +2,7 @@ import Modal from "./Modal";
 import ModalActions from "./ModalActions";
 
 const ProjectModal = ({
-  title,
+  type,
   isOpen,
   onClose,
   handlerSubmit,
@@ -11,6 +11,8 @@ const ProjectModal = ({
   valueName,
   setName,
 }) => {
+  const title = type === "create" ? "Новий проєкт" : "Редагувати проєкт";
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <h3 className="text-xl font-bold mb-4 dark:text-gray-300">{title}</h3>

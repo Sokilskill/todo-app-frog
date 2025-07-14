@@ -10,19 +10,19 @@ import Button from "./Button";
 import ThemeToggle from "./ThemeToggle";
 
 const Projects = () => {
-  const [color, setColor] = useState("#ffffff");
-  const [name, setName] = useState("");
-  const [idProject, setIdProject] = useState("");
+  const dispatch = useDispatch();
 
-  const [showCreateNewProjectModal, setShowCreateNewProjectModal] =
-    useState(false);
-  const [showEditProjectModal, setShowEditProjectModal] = useState(false);
+  const [modalConfig, setModalConfig] = useState({
+    type: null, // 'create' | 'edit'
+    isOpen: false,
+    name: "",
+    color: "#ffffff",
+    projectId: null,
+  });
 
   const orderProject = useSelector((state) => state.filters.selectedProjectId);
 
   const projects = useSelector(selectProjects);
-
-  const dispatch = useDispatch();
 
   const handleSelectProject = useCallback(
     (projectId) => {
@@ -31,34 +31,43 @@ const Projects = () => {
     [dispatch]
   );
 
-  const closeEditProjectModal = () => {
-    setShowEditProjectModal(false);
-  };
-  const closeCreateNewProjectModal = () => {
-    setShowCreateNewProjectModal(false);
-  };
-
-  const handlerEditProject = (e) => {
-    e.preventDefault();
-    if (name) {
-      dispatch(updateProject({ name, color, id: idProject }));
-    }
-    setName("");
-    closeEditProjectModal();
+  const openCreateModal = () => {
+    setModalConfig({
+      type: "create",
+      isOpen: true,
+      name: "",
+      color: "#ffffff",
+      projectId: null,
+    });
   };
 
-  const handlerAddNewProject = (e) => {
+  const openEditModal = (project) => {
+    setModalConfig({
+      type: "edit",
+      isOpen: true,
+      name: project.name,
+      color: project.color,
+      projectId: project.id,
+    });
+  };
+
+  const closeModal = () => {
+    setModalConfig((prev) => ({ ...prev, isOpen: false }));
+  };
+
+  const handlerSubmit = (e) => {
     e.preventDefault();
-    if (name) {
-      dispatch(
-        addProject({
-          name,
-          color,
-        })
-      );
-      setName("");
-      closeCreateNewProjectModal();
+    const { name, color, type, projectId } = modalConfig;
+
+    if (!name.trim()) return;
+
+    if (type === "create") {
+      dispatch(addProject({ name, color }));
+    } else if (type === "edit") {
+      dispatch(updateProject({ id: projectId, name, color }));
     }
+
+    closeModal();
   };
 
   return (
@@ -73,7 +82,7 @@ const Projects = () => {
             className="text-blue-500 hover:text-blue-700"
             size="icon"
             aria-label="Додати новий проєкт"
-            onClick={() => setShowCreateNewProjectModal(true)}
+            onClick={() => openCreateModal()}
             icon={FaPlus}
           ></Button>
         </div>
@@ -104,12 +113,7 @@ const Projects = () => {
                 size="icon"
                 data-todo-id={project.id}
                 aria-label="Редагувати проєкт"
-                onClick={() => {
-                  setName(project.name);
-                  setColor(project.color);
-                  setIdProject(project.id);
-                  setShowEditProjectModal(true);
-                }}
+                onClick={() => openEditModal(project)}
                 icon={FaEdit}
               ></Button>
             </div>
@@ -118,24 +122,14 @@ const Projects = () => {
       </ul>
 
       <ProjectModal
-        title={"Редагувати проєкт"}
-        isOpen={showEditProjectModal}
-        onClose={closeEditProjectModal}
-        handlerSubmit={handlerEditProject}
-        setName={setName}
-        setColor={setColor}
-        valueName={name}
-        valueColor={color}
-      />
-      <ProjectModal
-        title={"Новий проєкт"}
-        isOpen={showCreateNewProjectModal}
-        onClose={closeCreateNewProjectModal}
-        handlerSubmit={handlerAddNewProject}
-        setName={setName}
-        setColor={setColor}
-        valueName={name}
-        valueColor={color}
+        type={modalConfig.type}
+        isOpen={modalConfig.isOpen}
+        onClose={closeModal}
+        handlerSubmit={handlerSubmit}
+        valueName={modalConfig.name}
+        valueColor={modalConfig.color}
+        setName={(name) => setModalConfig((prev) => ({ ...prev, name }))}
+        setColor={(color) => setModalConfig((prev) => ({ ...prev, color }))}
       />
     </div>
   );
