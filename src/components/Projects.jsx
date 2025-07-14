@@ -4,11 +4,20 @@ import ProjectModal from "./ProjectModal";
 import { useDispatch, useSelector } from "react-redux";
 import { selectProjects } from "../redux/projects/projectSelector";
 import { addSelectedProjectId } from "../redux/filters/filtersSlice";
+import { addProject, updateProject } from "../redux/projects/projectsSlice";
+
 import Button from "./Button";
 import ThemeToggle from "./ThemeToggle";
 
 const Projects = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [color, setColor] = useState("#ffffff");
+  const [name, setName] = useState("");
+  const [idProject, setIdProject] = useState("");
+
+  const [showCreateNewProjectModal, setShowCreateNewProjectModal] =
+    useState(false);
+  const [showEditProjectModal, setShowEditProjectModal] = useState(false);
+
   const orderProject = useSelector((state) => state.filters.selectedProjectId);
 
   const projects = useSelector(selectProjects);
@@ -22,8 +31,34 @@ const Projects = () => {
     [dispatch]
   );
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeEditProjectModal = () => {
+    setShowEditProjectModal(false);
+  };
+  const closeCreateNewProjectModal = () => {
+    setShowCreateNewProjectModal(false);
+  };
+
+  const handlerEditProject = (e) => {
+    e.preventDefault();
+    if (name) {
+      dispatch(updateProject({ name, color, id: idProject }));
+    }
+    setName("");
+    closeEditProjectModal();
+  };
+
+  const handlerAddNewProject = (e) => {
+    e.preventDefault();
+    if (name) {
+      dispatch(
+        addProject({
+          name,
+          color,
+        })
+      );
+      setName("");
+      closeCreateNewProjectModal();
+    }
   };
 
   return (
@@ -38,7 +73,7 @@ const Projects = () => {
             className="text-blue-500 hover:text-blue-700"
             size="icon"
             aria-label="Додати новий проєкт"
-            onClick={() => setShowModal(true)}
+            onClick={() => setShowCreateNewProjectModal(true)}
             icon={FaPlus}
           ></Button>
         </div>
@@ -69,14 +104,39 @@ const Projects = () => {
                 size="icon"
                 data-todo-id={project.id}
                 aria-label="Редагувати проєкт"
-                onClick={() => {}}
+                onClick={() => {
+                  setName(project.name);
+                  setColor(project.color);
+                  setIdProject(project.id);
+                  setShowEditProjectModal(true);
+                }}
                 icon={FaEdit}
               ></Button>
             </div>
           </li>
         ))}
       </ul>
-      <ProjectModal isOpen={showModal} onClose={closeModal} />
+
+      <ProjectModal
+        title={"Редагувати проєкт"}
+        isOpen={showEditProjectModal}
+        onClose={closeEditProjectModal}
+        handlerSubmit={handlerEditProject}
+        setName={setName}
+        setColor={setColor}
+        valueName={name}
+        valueColor={color}
+      />
+      <ProjectModal
+        title={"Новий проєкт"}
+        isOpen={showCreateNewProjectModal}
+        onClose={closeCreateNewProjectModal}
+        handlerSubmit={handlerAddNewProject}
+        setName={setName}
+        setColor={setColor}
+        valueName={name}
+        valueColor={color}
+      />
     </div>
   );
 };
