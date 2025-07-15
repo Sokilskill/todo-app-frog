@@ -88,11 +88,11 @@ const Projects = () => {
         </div>
       </div>
 
-      <ul className="space-y-2 overflow-auto max-h-[200px]">
+      <ul className="pr-1.5 space-y-2 overflow-auto max-h-[200px]">
         {projects.map((project) => (
           <li
             key={project.id}
-            className="border-b border-gray-200 p-2 cursor-pointer"
+            className="border-b border-gray-200 p-2"
             style={{
               borderLeftColor: project.color,
               borderLeftWidth: "6px",
