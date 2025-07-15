@@ -41,8 +41,8 @@ const TodoList = ({ todoList, projects, allTodos }) => {
   }
 
   if (
-    (todoList.length === 0 && isSelectFilters.priority !== "all") ||
-    isSelectFilters.status !== "all"
+    todoList.length === 0 &&
+    (isSelectFilters.priority !== "all" || isSelectFilters.status !== "all")
   ) {
     return (
       <div className="flex flex-col items-center ">

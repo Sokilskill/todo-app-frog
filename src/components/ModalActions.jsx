@@ -10,7 +10,11 @@ const ModalActions = ({
   form,
 }) => (
   <div className="flex flex-col justify-center gap-3 mt-4 sm:gap-6 md:gap-8 sm:flex-row ">
-    <Button variant="secondary" onClick={onCancel}>
+    <Button
+      variant="secondary"
+      onClick={onCancel}
+      className="md:w-full md:max-w-[90px]"
+    >
       {cancelLabel}
     </Button>
 
@@ -19,6 +23,7 @@ const ModalActions = ({
       variant={confirmVariant}
       onClick={onConfirm}
       form={form}
+      className="md:w-full md:max-w-[90px]"
     >
       {confirmLabel}
     </Button>

@@ -1,38 +1,26 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addProject } from "../redux/projects/projectsSlice";
 import Modal from "./Modal";
 import ModalActions from "./ModalActions";
 
-const ProjectModal = ({ isOpen, onClose }) => {
-  const [color, setColor] = useState("#ffffff");
-  const [name, setName] = useState("");
-  const dispatch = useDispatch();
-
-  const handlerAddNewProject = (e) => {
-    e.preventDefault();
-    if (name) {
-      dispatch(
-        addProject({
-          name,
-          color,
-        })
-      );
-      setName("");
-      onClose();
-    }
-  };
+const ProjectModal = ({
+  type,
+  isOpen,
+  onClose,
+  handlerSubmit,
+  setColor,
+  valueColor,
+  valueName,
+  setName,
+}) => {
+  const title = type === "create" ? "Новий проєкт" : "Редагувати проєкт";
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <h3 className="text-xl font-bold mb-4 dark:text-gray-300">
-        Новий проект
-      </h3>
+      <h3 className="text-xl font-bold mb-4 dark:text-gray-300">{title}</h3>
 
       <form
         id="project-form"
-        className="flex flex-col p-5 gap-4  dark:text-gray-300 "
-        onSubmit={handlerAddNewProject}
+        className="flex flex-col  gap-4  dark:text-gray-300 "
+        onSubmit={handlerSubmit}
       >
         <div>
           <label
@@ -44,8 +32,8 @@ const ProjectModal = ({ isOpen, onClose }) => {
           <input
             type="text"
             id="project-name"
-            className="p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-200"
-            value={name}
+            className="w-full md:w-96  p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-200"
+            value={valueName}
             onChange={(e) => setName(e.target.value)}
             required
           />
@@ -62,7 +50,7 @@ const ProjectModal = ({ isOpen, onClose }) => {
             type="color"
             id="project-color"
             className="w-full border-gray-300 dark:border-gray-600 md:rounded-lg  md:h-10"
-            value={color}
+            value={valueColor}
             onChange={(e) => {
               setColor(e.target.value);
             }}

@@ -4,16 +4,25 @@ import ProjectModal from "./ProjectModal";
 import { useDispatch, useSelector } from "react-redux";
 import { selectProjects } from "../redux/projects/projectSelector";
 import { addSelectedProjectId } from "../redux/filters/filtersSlice";
+import { addProject, updateProject } from "../redux/projects/projectsSlice";
+
 import Button from "./Button";
 import ThemeToggle from "./ThemeToggle";
 
 const Projects = () => {
-  const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
+
+  const [modalConfig, setModalConfig] = useState({
+    type: null, // 'create' | 'edit'
+    isOpen: false,
+    name: "",
+    color: "#ffffff",
+    projectId: null,
+  });
+
   const orderProject = useSelector((state) => state.filters.selectedProjectId);
 
   const projects = useSelector(selectProjects);
-
-  const dispatch = useDispatch();
 
   const handleSelectProject = useCallback(
     (projectId) => {
@@ -22,8 +31,43 @@ const Projects = () => {
     [dispatch]
   );
 
+  const openCreateModal = () => {
+    setModalConfig({
+      type: "create",
+      isOpen: true,
+      name: "",
+      color: "#ffffff",
+      projectId: null,
+    });
+  };
+
+  const openEditModal = (project) => {
+    setModalConfig({
+      type: "edit",
+      isOpen: true,
+      name: project.name,
+      color: project.color,
+      projectId: project.id,
+    });
+  };
+
   const closeModal = () => {
-    setShowModal(false);
+    setModalConfig((prev) => ({ ...prev, isOpen: false }));
+  };
+
+  const handlerSubmit = (e) => {
+    e.preventDefault();
+    const { name, color, type, projectId } = modalConfig;
+
+    if (!name.trim()) return;
+
+    if (type === "create") {
+      dispatch(addProject({ name, color }));
+    } else if (type === "edit") {
+      dispatch(updateProject({ id: projectId, name, color }));
+    }
+
+    closeModal();
   };
 
   return (
@@ -38,7 +82,7 @@ const Projects = () => {
             className="text-blue-500 hover:text-blue-700"
             size="icon"
             aria-label="Додати новий проєкт"
-            onClick={() => setShowModal(true)}
+            onClick={() => openCreateModal()}
             icon={FaPlus}
           ></Button>
         </div>
@@ -69,14 +113,24 @@ const Projects = () => {
                 size="icon"
                 data-todo-id={project.id}
                 aria-label="Редагувати проєкт"
-                onClick={() => {}}
+                onClick={() => openEditModal(project)}
                 icon={FaEdit}
               ></Button>
             </div>
           </li>
         ))}
       </ul>
-      <ProjectModal isOpen={showModal} onClose={closeModal} />
+
+      <ProjectModal
+        type={modalConfig.type}
+        isOpen={modalConfig.isOpen}
+        onClose={closeModal}
+        handlerSubmit={handlerSubmit}
+        valueName={modalConfig.name}
+        valueColor={modalConfig.color}
+        setName={(name) => setModalConfig((prev) => ({ ...prev, name }))}
+        setColor={(color) => setModalConfig((prev) => ({ ...prev, color }))}
+      />
     </div>
   );
 };
