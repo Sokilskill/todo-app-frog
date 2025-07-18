@@ -85,7 +85,7 @@ const TodoList = ({ todoList, projects, allTodos }) => {
 
       <ul
         id="todo-list"
-        className="divide-y divide-gray-200 dark:divide-gray-700"
+        className="lg:max-h-[calc(100vh-26rem)] min-h-[24rem] overflow-y-auto divide-y divide-gray-200 dark:divide-gray-700"
       >
         {todoList.map((todo) => (
           <li
