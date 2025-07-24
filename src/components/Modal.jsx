@@ -26,11 +26,11 @@ const Modal = ({ children, isOpen, onClose }) => {
 
   return ReactDOM.createPortal(
     <div
-      className="fixed left-0 bottom-0 top-0 right-0 bg-gray-800/30 px-5 sm:p-8 md:px-11 flex justify-center items-center z-[1000]"
+      className="fixed left-0 bottom-0 top-0 right-0 bg-gray-800/30 px-5 p-8 md:px-11 flex justify-center items-center z-[1000]"
       onClick={onClose}
     >
       <div
-        className="relative  bg-white  shadow-2xl dark:bg-gray-900 p-5 sm:p-8 md:p-10 md:py-12 rounded-lg dark:shadow-[0 4px 6px rgba(0, 0, 0, 0.5)] max-w-4xl "
+        className="relative  bg-white  shadow-2xl dark:bg-gray-900 p-10 md:px-10 md:py-12 rounded-lg dark:shadow-[0 4px 6px rgba(0, 0, 0, 0.5)] max-w-4xl "
         onClick={(e) => e.stopPropagation()}
       >
         <Button
