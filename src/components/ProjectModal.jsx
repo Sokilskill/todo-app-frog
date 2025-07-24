@@ -27,7 +27,7 @@ const ProjectModal = ({
             htmlFor="project-name"
             className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
           >
-            Назва проекту
+            Назва проєкту
           </label>
           <input
             type="text"
@@ -44,7 +44,7 @@ const ProjectModal = ({
             htmlFor="project-color"
             className="block text-sm font-medium mb-1"
           >
-            Колір проекту
+            Колір проєкту
           </label>
           <input
             type="color"

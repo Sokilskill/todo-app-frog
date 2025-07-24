@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-      <div className="bg-gray-100 text-gray-800 dark:bg-[#0f172a] dark:text-gray-200 min-h-full">
+      <div className=" min-h-screen bg-gray-100 text-gray-800 dark:bg-[#0f172a] dark:text-gray-200">
         <div className="container mx-auto px-4 py-8 max-w-6xl">
           <Header />
 

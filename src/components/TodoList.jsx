@@ -1,14 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
-import TodoItem from "./TodoItem";
+
 import { selectProjectById } from "../redux/projects/projectSelector";
+import { selectFilters } from "../redux/filters/filtersSelector";
 import {
   addSelectedProjectId,
   clearFilters,
 } from "../redux/filters/filtersSlice";
+
+import { useMediaQuery } from "../hooks/useMediaQuery";
+
+import TodoItem from "./TodoItem";
 import Button from "./Button";
-import { selectFilters } from "../redux/filters/filtersSelector";
+import Filter from "./Filter";
 
 const TodoList = ({ todoList, projects, allTodos }) => {
+  const mediaQuery = useMediaQuery();
+
   const dispatch = useDispatch();
 
   const isSelectFilters = useSelector(selectFilters);
@@ -33,7 +40,7 @@ const TodoList = ({ todoList, projects, allTodos }) => {
     return (
       <div className="flex flex-col items-center">
         <p className="p-4 text-center text-gray-500">
-          В обраному проекті відсутні завдання. Додайте завдання.
+          В обраному проєкті відсутні завдання. Додайте завдання.
         </p>
         <ResetProjectButton />
       </div>
@@ -67,7 +74,7 @@ const TodoList = ({ todoList, projects, allTodos }) => {
 
             {orderProject && (
               <>
-                <span> за обраним проектом </span>
+                <span> за обраним проєктом </span>
               </>
             )}
 
@@ -81,11 +88,12 @@ const TodoList = ({ todoList, projects, allTodos }) => {
 
           {orderProject && <ResetProjectButton />}
         </div>
+        {mediaQuery !== "lg" && <Filter />}
       </div>
 
       <ul
         id="todo-list"
-        className="divide-y divide-gray-200 dark:divide-gray-700"
+        className="lg:max-h-[calc(100vh-26rem)] lg:min-h-[24rem] overflow-y-auto divide-y divide-gray-200 dark:divide-gray-700"
       >
         {todoList.map((todo) => (
           <li
@@ -112,11 +120,11 @@ export const ResetProjectButton = () => {
   const dispatch = useDispatch();
 
   return (
-    <button
-      className="ml-2 px-4 py-1 text-sm text-white rounded-full bg-red-500 hover:bg-red-700"
+    <Button
+      variant="danger"
       onClick={() => dispatch(addSelectedProjectId(null))}
     >
       повернутися до всіх завдань
-    </button>
+    </Button>
   );
 };
