@@ -1,27 +1,20 @@
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setStatusFilter,
-  setPriorityFilter,
-  setSortBy,
-} from "../redux/filters/filtersSlice";
-import { selectFilters } from "../redux/filters/filtersSelector";
+import { useFilters } from "../hooks/useFilters";
 
 const Filter = () => {
-  const dispatch = useDispatch();
-  const { priority, status, sortBy } = useSelector(selectFilters);
+  const { filters, updateStatus, updatePriority, updateSort } = useFilters();
 
   return (
-    <div className="bg-white  dark:bg-gray-800 rounded-xl shadow p-4">
-      <h2 className="font-semibold text-lg mb-4">Фільтри</h2>
-      <div className="space-y-3">
+    <div className="bg-white  dark:bg-gray-800 pt-2 rounded-xl lg:shadow lg:p-4">
+      <h2 className="hidden lg:block font-semibold text-lg mb-4">Фільтри</h2>
+      <div className="flex justify-between gap-4 w-full lg:flex-col">
         <div>
           <label htmlFor="status" className="block text-sm font-medium mb-1">
             Статус
           </label>
           <select
             id="status"
-            onChange={(e) => dispatch(setStatusFilter(e.target.value))}
-            value={status}
+            onChange={(e) => updateStatus(e.target.value)}
+            value={filters.status}
             className="w-full rounded-lg border bg-blue-50 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
           >
             <option value="all">Всі</option>
@@ -36,9 +29,9 @@ const Filter = () => {
           </label>
           <select
             id="priority"
-            onChange={(e) => dispatch(setPriorityFilter(e.target.value))}
+            onChange={(e) => updatePriority(e.target.value)}
             className="w-full rounded-lg border bg-blue-50 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-            value={priority}
+            value={filters.priority}
           >
             <option value="all">Всі</option>
             <option value="high">Високий</option>
@@ -53,8 +46,8 @@ const Filter = () => {
           </label>
           <select
             id="sort"
-            onChange={(e) => dispatch(setSortBy(e.target.value))}
-            value={sortBy}
+            onChange={(e) => updateSort(e.target.value)}
+            value={filters.sortBy}
             className="w-full rounded-lg border bg-blue-50 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
           >
             <option value="date-asc">Дата (старі → нові)</option>
