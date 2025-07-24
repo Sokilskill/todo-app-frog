@@ -55,7 +55,7 @@ const TodoFormFields = ({
             htmlFor={`${prefix}-project`}
             className="block text-sm font-medium mb-1"
           >
-            Проект
+            Проєкт
           </label>
           <select
             id={`${prefix}-project`}

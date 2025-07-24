@@ -40,7 +40,7 @@ const TodoList = ({ todoList, projects, allTodos }) => {
     return (
       <div className="flex flex-col items-center">
         <p className="p-4 text-center text-gray-500">
-          В обраному проекті відсутні завдання. Додайте завдання.
+          В обраному проєкті відсутні завдання. Додайте завдання.
         </p>
         <ResetProjectButton />
       </div>
@@ -74,7 +74,7 @@ const TodoList = ({ todoList, projects, allTodos }) => {
 
             {orderProject && (
               <>
-                <span> за обраним проектом </span>
+                <span> за обраним проєктом </span>
               </>
             )}
 
