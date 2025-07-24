@@ -16,6 +16,7 @@ const Filter = () => {
             onChange={(e) => updateStatus(e.target.value)}
             value={filters.status}
             className="w-full rounded-lg border bg-blue-50 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+            aria-label="Статус завдання"
           >
             <option value="all">Всі</option>
             <option value="pending">Активні</option>
@@ -32,6 +33,7 @@ const Filter = () => {
             onChange={(e) => updatePriority(e.target.value)}
             className="w-full rounded-lg border bg-blue-50 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
             value={filters.priority}
+            aria-label="Пріоритет завдання"
           >
             <option value="all">Всі</option>
             <option value="high">Високий</option>
@@ -49,6 +51,7 @@ const Filter = () => {
             onChange={(e) => updateSort(e.target.value)}
             value={filters.sortBy}
             className="w-full rounded-lg border bg-blue-50 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+            aria-label="Сортування завдань"
           >
             <option value="date-asc">Дата (старі → нові)</option>
             <option value="date-desc">Дата (нові → старі)</option>
