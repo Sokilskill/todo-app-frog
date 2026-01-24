@@ -1,24 +1,39 @@
+import { useFilters } from "../hooks/useFilters";
+
 const Filter = () => {
+  const { filters, updateStatus, updatePriority, updateSort } = useFilters();
+
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-4">
-      <h2 className="font-semibold text-lg mb-4">Фільтри</h2>
-      <div className="space-y-3">
+    <div className="bg-white  dark:bg-gray-800 pt-2 rounded-xl lg:shadow lg:p-4">
+      <h2 className="hidden lg:block font-semibold text-lg mb-4">Фільтри</h2>
+      <div className="flex justify-between gap-4 w-full lg:flex-col">
         <div>
-          <label className="block text-sm font-medium mb-1">Статус</label>
+          <label htmlFor="status" className="block text-sm font-medium mb-1">
+            Статус
+          </label>
           <select
-            id="status-filter"
-            className="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+            id="status"
+            onChange={(e) => updateStatus(e.target.value)}
+            value={filters.status}
+            className="w-full rounded-lg border bg-blue-50 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+            aria-label="Статус завдання"
           >
             <option value="all">Всі</option>
             <option value="pending">Активні</option>
             <option value="completed">Завершені</option>
           </select>
         </div>
+
         <div>
-          <label className="block text-sm font-medium mb-1">Пріоритет</label>
+          <label htmlFor="priority" className="block text-sm font-medium mb-1">
+            Пріоритет
+          </label>
           <select
-            id="priority-filter"
-            className="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+            id="priority"
+            onChange={(e) => updatePriority(e.target.value)}
+            className="w-full rounded-lg border bg-blue-50 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+            value={filters.priority}
+            aria-label="Пріоритет завдання"
           >
             <option value="all">Всі</option>
             <option value="high">Високий</option>
@@ -26,11 +41,17 @@ const Filter = () => {
             <option value="low">Низький</option>
           </select>
         </div>
+
         <div>
-          <label className="block text-sm font-medium mb-1">Сортування</label>
+          <label htmlFor="sort" className="block text-sm font-medium mb-1">
+            Сортування
+          </label>
           <select
-            id="sort-by"
-            className="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+            id="sort"
+            onChange={(e) => updateSort(e.target.value)}
+            value={filters.sortBy}
+            className="w-full rounded-lg border bg-blue-50 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+            aria-label="Сортування завдань"
           >
             <option value="date-asc">Дата (старі → нові)</option>
             <option value="date-desc">Дата (нові → старі)</option>
