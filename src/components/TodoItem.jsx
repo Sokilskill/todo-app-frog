@@ -18,6 +18,7 @@ const TodoItem = ({ todo, project }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   let formattedComletedDate;
+
   const formattedCreatedDate = formatTodoDate(todo.createdAt);
   if (todo.completedAt && todo.completed) {
     formattedComletedDate = formatTodoDate(todo.completedAt);
@@ -92,7 +93,7 @@ const TodoItem = ({ todo, project }) => {
           <div className=" flex flex-wrap items-center gap-2">
             <span
               className={`px-2 py-1 w-[46px] text-center text-xs rounded-full p ${getPriorityClass(
-                todo.priority
+                todo.priority,
               )}`}
             >
               {todo.priority}

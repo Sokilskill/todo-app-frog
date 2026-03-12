@@ -5,7 +5,7 @@ export function formatTodoDate(isoString) {
   const todoDayStart = new Date(
     todoDate.getFullYear(),
     todoDate.getMonth(),
-    todoDate.getDate()
+    todoDate.getDate(),
   );
   const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const yesterdayStart = new Date(todayStart);
@@ -26,7 +26,7 @@ export function formatTodoDate(isoString) {
   };
 
   if (todoDayStart.getTime() === todayStart.getTime()) {
-    return formatTime(todoDate);
+    return `сьогодні ${formatTime(todoDate)}`;
   } else if (todoDayStart.getTime() === yesterdayStart.getTime()) {
     return `вчора ${formatTime(todoDate)}`;
   } else {
