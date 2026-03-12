@@ -9,6 +9,27 @@ import Button from "./Button";
 import Modal from "./Modal";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 
+const AddNewTodoForm = ({ form, handleSubmit, projects }) => {
+  return (
+    <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow lg:p-4">
+      <TodoFormFields
+        prefix="todo"
+        showSubmitButton={true}
+        title={form.title}
+        setTitle={form.setTitle}
+        priority={form.priority}
+        setPriority={form.setPriority}
+        color={form.color}
+        setColor={form.setColor}
+        projectId={form.projectId}
+        setProjectId={form.setProjectId}
+        onSubmit={handleSubmit}
+        projects={projects}
+      />
+    </div>
+  );
+};
+
 const AddTodoForm = () => {
   const { form, handleSubmit } = useAddTodoForm();
   const mediaQuery = useMediaQuery();
@@ -16,27 +37,6 @@ const AddTodoForm = () => {
   const projects = useSelector(selectProjects);
 
   const [showAddNewTodoModal, setShowAddNewTodoModal] = useState(false);
-
-  const AddNewTodoForm = () => {
-    return (
-      <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow lg:p-4">
-        <TodoFormFields
-          prefix="todo"
-          showSubmitButton={true}
-          title={form.title}
-          setTitle={form.setTitle}
-          priority={form.priority}
-          setPriority={form.setPriority}
-          color={form.color}
-          setColor={form.setColor}
-          projectId={form.projectId}
-          setProjectId={form.setProjectId}
-          onSubmit={handleSubmit}
-          projects={projects}
-        />
-      </div>
-    );
-  };
 
   if (mediaQuery !== "lg") {
     return (
@@ -61,7 +61,13 @@ const AddTodoForm = () => {
     );
   }
 
-  return <AddNewTodoForm />;
+  return (
+    <AddNewTodoForm
+      form={form}
+      handleSubmit={handleSubmit}
+      projects={projects}
+    />
+  );
 };
 
 export default AddTodoForm;
