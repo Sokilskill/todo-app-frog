@@ -1,17 +1,13 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import Modal from "./Modal";
-import { selectProjects } from "../redux/projects/projectSelector";
+import Modal from "../ui/Modal";
 import ModalActions from "./ModalActions";
-import TodoFormFields from "./TodoFormFields";
+import TodoFormFields from "../TodoFormFields";
 
-const TodoEditModal = ({ isOpen, onClose, todo, onSave }) => {
+const TodoEditModal = ({ isOpen, onClose, projects, todo, onSave }) => {
   const [title, setTitle] = useState(todo.title);
   const [priority, setPriority] = useState(todo.priority);
   const [color, setColor] = useState(todo.color);
   const [projectId, setProjectId] = useState(todo.projectId);
-
-  const projects = useSelector(selectProjects);
 
   const handleSubmit = (e) => {
     e.preventDefault();

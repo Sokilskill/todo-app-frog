@@ -5,8 +5,8 @@ import { FaPlus } from "react-icons/fa";
 import { selectProjects } from "../redux/projects/projectSelector";
 import { useAddTodoForm } from "../hooks/useAddTodoForm";
 import TodoFormFields from "./TodoFormFields";
-import Button from "./Button";
-import Modal from "./Modal";
+import Button from "./ui/Button";
+import Modal from "./ui/Modal";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 
 const AddNewTodoForm = ({ form, handleSubmit, projects }) => {

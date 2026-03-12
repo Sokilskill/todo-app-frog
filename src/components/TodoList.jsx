@@ -10,7 +10,7 @@ import {
 import { useMediaQuery } from "../hooks/useMediaQuery";
 
 import TodoItem from "./TodoItem";
-import Button from "./Button";
+import Button from "./ui/Button";
 import Filter from "./Filter";
 
 const TodoList = ({ todoList, projects, allTodos }) => {
@@ -20,7 +20,7 @@ const TodoList = ({ todoList, projects, allTodos }) => {
 
   const isSelectFilters = useSelector(selectFilters);
   const orderProject = useSelector((state) =>
-    selectProjectById(state, state.filters.selectedProjectId)
+    selectProjectById(state, state.filters.selectedProjectId),
   );
 
   if (allTodos.length === 0) {
@@ -105,6 +105,7 @@ const TodoList = ({ todoList, projects, allTodos }) => {
           >
             <TodoItem
               todo={todo}
+              projects={projects}
               project={projects.find((p) => p.id === todo.projectId)}
             />
           </li>

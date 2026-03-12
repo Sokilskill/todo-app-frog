@@ -1,5 +1,5 @@
-import Modal from "./Modal";
-import ModalActions from "./ModalActions";
+import Modal from "./ui//Modal";
+import ModalActions from "./modals/ModalActions";
 
 const ProjectModal = ({
   type,
