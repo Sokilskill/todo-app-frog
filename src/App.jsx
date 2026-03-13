@@ -2,12 +2,9 @@ import "./App.css";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import AddTodoForm from "./components/AddTodoForm";
-import TodoList from "./components/TodoList";
+import TodoSection from "./components/todo/TodoSection";
 
-import { useDispatch, useSelector } from "react-redux";
-import { selectProjects } from "./redux/projects/projectSelector";
-import { filterTodos } from "./redux/filters/filtersSelector";
-import { selectTodos } from "./redux/todos/todosSelector";
+import { useDispatch } from "react-redux";
 import { useEffect, useMemo } from "react";
 import { setScreenSize } from "./redux/ui/uiSlice";
 
@@ -21,9 +18,6 @@ const debounce = (fn, ms) => {
 
 function App() {
   const dispatch = useDispatch();
-  const projects = useSelector(selectProjects);
-  const filteredTodos = useSelector(filterTodos);
-  const allTodos = useSelector(selectTodos);
 
   const debouncedHandleResize = useMemo(
     () =>
@@ -56,11 +50,7 @@ function App() {
             <Sidebar />
             <main className="lg:col-span-3 space-y-6">
               <AddTodoForm />
-              <TodoList
-                todoList={filteredTodos}
-                allTodos={allTodos}
-                projects={projects}
-              />
+              <TodoSection />
             </main>
           </div>
         </div>
