@@ -11,15 +11,20 @@ import TodoItem from "./TodoItem";
 import Button from "./ui/Button";
 import Filter from "./Filter";
 import { useScreenSize } from "../hooks/useScreenSize";
+import { useMemo } from "react";
 
 const TodoList = ({ todoList, projects, allTodos }) => {
-  const screenSize = useScreenSize();
-
   const dispatch = useDispatch();
+  const screenSize = useScreenSize();
 
   const isSelectFilters = useSelector(selectFilters);
   const orderProject = useSelector((state) =>
     selectProjectById(state, state.filters.selectedProjectId),
+  );
+
+  const projectsMap = useMemo(
+    () => Object.fromEntries(projects.map((p) => [p.id, p])),
+    [projects],
   );
 
   if (allTodos.length === 0) {
@@ -105,7 +110,7 @@ const TodoList = ({ todoList, projects, allTodos }) => {
             <TodoItem
               todo={todo}
               projects={projects}
-              project={projects.find((p) => p.id === todo.projectId)}
+              project={projectsMap[todo.projectId]}
             />
           </li>
         ))}
@@ -124,7 +129,7 @@ export const ResetProjectButton = () => {
       variant="danger"
       onClick={() => dispatch(addSelectedProjectId(null))}
     >
-      повернутися до всіх завдань
+      Повернутися до всіх завдань
     </Button>
   );
 };
