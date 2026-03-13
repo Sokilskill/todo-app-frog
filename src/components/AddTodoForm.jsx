@@ -7,7 +7,7 @@ import { useAddTodoForm } from "../hooks/useAddTodoForm";
 import TodoFormFields from "./TodoFormFields";
 import Button from "./ui/Button";
 import Modal from "./ui/Modal";
-import { useMediaQuery } from "../hooks/useMediaQuery";
+import { useScreenSize } from "../hooks/useScreenSize";
 
 const AddNewTodoForm = ({ form, handleSubmit, projects }) => {
   return (
@@ -32,13 +32,12 @@ const AddNewTodoForm = ({ form, handleSubmit, projects }) => {
 
 const AddTodoForm = () => {
   const { form, handleSubmit } = useAddTodoForm();
-  const mediaQuery = useMediaQuery();
-
+  const screenSize = useScreenSize();
   const projects = useSelector(selectProjects);
 
   const [showAddNewTodoModal, setShowAddNewTodoModal] = useState(false);
 
-  if (mediaQuery !== "lg") {
+  if (screenSize !== "lg") {
     return (
       <div className="fixed bottom-10 right-10 z-50">
         <Button

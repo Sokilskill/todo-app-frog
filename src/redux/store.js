@@ -14,11 +14,13 @@ import storage from "redux-persist/lib/storage";
 import projectsReducer from "./projects/projectsSlice";
 import todosReducer from "./todos/todosSlice";
 import filtersReducer from "./filters/filtersSlice";
+import uiSlice from "./ui/uiSlice";
 
 const rootReducer = combineReducers({
   projects: projectsReducer,
   todos: todosReducer,
   filters: filtersReducer,
+  ui: uiSlice,
 });
 const persistConfig = {
   key: "root",

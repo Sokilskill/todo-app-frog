@@ -1,14 +1,14 @@
 import Projects from "./Projects";
 import Filter from "./Filter";
-import { useMediaQuery } from "../hooks/useMediaQuery";
+import { useScreenSize } from "../hooks/useScreenSize";
 
 const Sidebar = () => {
-  const mediaQuery = useMediaQuery();
+  const screenSize = useScreenSize();
 
   return (
     <aside className="lg:col-span-1 space-y-6">
       <Projects />
-      {mediaQuery === "lg" && <Filter />}
+      {screenSize === "lg" && <Filter />}
     </aside>
   );
 };

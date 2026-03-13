@@ -7,14 +7,13 @@ import {
   clearFilters,
 } from "../redux/filters/filtersSlice";
 
-import { useMediaQuery } from "../hooks/useMediaQuery";
-
 import TodoItem from "./TodoItem";
 import Button from "./ui/Button";
 import Filter from "./Filter";
+import { useScreenSize } from "../hooks/useScreenSize";
 
 const TodoList = ({ todoList, projects, allTodos }) => {
-  const mediaQuery = useMediaQuery();
+  const screenSize = useScreenSize();
 
   const dispatch = useDispatch();
 
@@ -88,7 +87,7 @@ const TodoList = ({ todoList, projects, allTodos }) => {
 
           {orderProject && <ResetProjectButton />}
         </div>
-        {mediaQuery !== "lg" && <Filter />}
+        {screenSize !== "lg" && <Filter />}
       </div>
 
       <ul
