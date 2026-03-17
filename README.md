@@ -1,12 +1,38 @@
-# React + Vite
+# Todo App Frog 🐸
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[Ukrainian](README.uk.md)
 
-Currently, two official plugins are available:
+A task management application built with **React**, **Redux Toolkit**, and **Tailwind CSS**. The app focus on organized project-based task management with persistent storage.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- **Project Management:** Create and edit projects with custom names and colors.
+- **Task Management:** Create, edit, and delete tasks.
+- **Task Association:** Link tasks to specific projects for better organization.
+- **Task Properties:** Set priority levels (low, medium, high) and assign colors to tasks.
+- **Filtering:** Filter tasks by various criteria to find what you need quickly.
+- **Theming:** Toggle between Dark and Light modes.
+- **Data Persistence:** All data is saved to `localStorage` using `redux-persist`.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠 Tech Stack
+
+- **Frontend:** React.js
+- **State Management:** Redux Toolkit (RTK)
+- **Persistence:** Redux Persist (Local Storage)
+- **Styling:** Tailwind CSS
+
+## 📦 Getting Started
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/Sokilskill/todo-app-frog.git](https://github.com/Sokilskill/todo-app-frog.git)
+   cd todo-app-frog
+   ```
+2. **Install dependencies:**
+   ```bash
+    npm install
+   ```
+3. **Run development server:**
+   ```bash
+   npm run dev
+   ```
