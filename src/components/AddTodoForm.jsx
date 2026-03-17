@@ -5,40 +5,39 @@ import { FaPlus } from "react-icons/fa";
 import { selectProjects } from "../redux/projects/projectSelector";
 import { useAddTodoForm } from "../hooks/useAddTodoForm";
 import TodoFormFields from "./TodoFormFields";
-import Button from "./Button";
-import Modal from "./Modal";
-import { useMediaQuery } from "../hooks/useMediaQuery";
+import Button from "./ui/Button";
+import Modal from "./ui/Modal";
+import { useScreenSize } from "../hooks/useScreenSize";
+
+const AddNewTodoForm = ({ form, handleSubmit, projects }) => {
+  return (
+    <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow lg:p-4">
+      <TodoFormFields
+        prefix="todo"
+        showSubmitButton={true}
+        title={form.title}
+        setTitle={form.setTitle}
+        priority={form.priority}
+        setPriority={form.setPriority}
+        color={form.color}
+        setColor={form.setColor}
+        projectId={form.projectId}
+        setProjectId={form.setProjectId}
+        onSubmit={handleSubmit}
+        projects={projects}
+      />
+    </div>
+  );
+};
 
 const AddTodoForm = () => {
   const { form, handleSubmit } = useAddTodoForm();
-  const mediaQuery = useMediaQuery();
-
+  const screenSize = useScreenSize();
   const projects = useSelector(selectProjects);
 
   const [showAddNewTodoModal, setShowAddNewTodoModal] = useState(false);
 
-  const AddNewTodoForm = () => {
-    return (
-      <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow lg:p-4">
-        <TodoFormFields
-          prefix="todo"
-          showSubmitButton={true}
-          title={form.title}
-          setTitle={form.setTitle}
-          priority={form.priority}
-          setPriority={form.setPriority}
-          color={form.color}
-          setColor={form.setColor}
-          projectId={form.projectId}
-          setProjectId={form.setProjectId}
-          onSubmit={handleSubmit}
-          projects={projects}
-        />
-      </div>
-    );
-  };
-
-  if (mediaQuery !== "lg") {
+  if (screenSize !== "lg") {
     return (
       <div className="fixed bottom-10 right-10 z-50">
         <Button
@@ -61,7 +60,13 @@ const AddTodoForm = () => {
     );
   }
 
-  return <AddNewTodoForm />;
+  return (
+    <AddNewTodoForm
+      form={form}
+      handleSubmit={handleSubmit}
+      projects={projects}
+    />
+  );
 };
 
 export default AddTodoForm;

@@ -1,9 +1,9 @@
 import { FaPlus } from "react-icons/fa6";
-import Button from "./Button";
+import Button from "./ui/Button";
 
 const TodoFormFields = ({
   prefix,
-  showSubmitButton = "false",
+  showSubmitButton = true,
   title = "",
   setTitle = () => {},
   priority = "medium",
@@ -48,7 +48,6 @@ const TodoFormFields = ({
           </Button>
         )}
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div>
           <label

@@ -7,20 +7,24 @@ import {
   clearFilters,
 } from "../redux/filters/filtersSlice";
 
-import { useMediaQuery } from "../hooks/useMediaQuery";
-
 import TodoItem from "./TodoItem";
-import Button from "./Button";
+import Button from "./ui/Button";
 import Filter from "./Filter";
+import { useScreenSize } from "../hooks/useScreenSize";
+import { useMemo } from "react";
 
 const TodoList = ({ todoList, projects, allTodos }) => {
-  const mediaQuery = useMediaQuery();
-
   const dispatch = useDispatch();
+  const screenSize = useScreenSize();
 
   const isSelectFilters = useSelector(selectFilters);
   const orderProject = useSelector((state) =>
-    selectProjectById(state, state.filters.selectedProjectId)
+    selectProjectById(state, state.filters.selectedProjectId),
+  );
+
+  const projectsMap = useMemo(
+    () => Object.fromEntries(projects.map((p) => [p.id, p])),
+    [projects],
   );
 
   if (allTodos.length === 0) {
@@ -88,7 +92,7 @@ const TodoList = ({ todoList, projects, allTodos }) => {
 
           {orderProject && <ResetProjectButton />}
         </div>
-        {mediaQuery !== "lg" && <Filter />}
+        {screenSize !== "lg" && <Filter />}
       </div>
 
       <ul
@@ -105,7 +109,8 @@ const TodoList = ({ todoList, projects, allTodos }) => {
           >
             <TodoItem
               todo={todo}
-              project={projects.find((p) => p.id === todo.projectId)}
+              projects={projects}
+              project={projectsMap[todo.projectId]}
             />
           </li>
         ))}
@@ -124,7 +129,7 @@ export const ResetProjectButton = () => {
       variant="danger"
       onClick={() => dispatch(addSelectedProjectId(null))}
     >
-      повернутися до всіх завдань
+      Повернутися до всіх завдань
     </Button>
   );
 };

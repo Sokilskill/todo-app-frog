@@ -1,5 +1,4 @@
 import { useDispatch } from "react-redux";
-import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import {
   toggleTodoStatus,
   deleteTodo,
@@ -7,17 +6,17 @@ import {
 } from "../redux/todos/todosSlice";
 import { formatTodoDate, getPriorityClass } from "../utils";
 import { useState } from "react";
-import TodoEditModal from "./TodoEditModal";
-import Modal from "./Modal";
-import ModalActions from "./ModalActions";
-import Button from "./Button";
+import TodoEditModal from "./modals/TodoEditModal";
+import { DeleteTodoModal } from "./modals/DeleteTodoModal";
+import { TodoActionButtons } from "./todo/TodoActionButtons";
 
-const TodoItem = ({ todo, project }) => {
+const TodoItem = ({ todo, project, projects }) => {
   const dispatch = useDispatch();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isDeleteTodoModalOpen, setIsDeleteTodoModalOpen] = useState(false);
 
   let formattedComletedDate;
+
   const formattedCreatedDate = formatTodoDate(todo.createdAt);
   if (todo.completedAt && todo.completed) {
     formattedComletedDate = formatTodoDate(todo.completedAt);
@@ -32,11 +31,11 @@ const TodoItem = ({ todo, project }) => {
   };
 
   const handleCloseDeleteModal = () => {
-    setIsDeleteModalOpen(false);
+    setIsDeleteTodoModalOpen(false);
   };
 
   const handleOpenDeleteModal = () => {
-    setIsDeleteModalOpen(true);
+    setIsDeleteTodoModalOpen(true);
   };
 
   const handleSaveEdit = ({ title, priority, color, projectId }) => {
@@ -92,7 +91,7 @@ const TodoItem = ({ todo, project }) => {
           <div className=" flex flex-wrap items-center gap-2">
             <span
               className={`px-2 py-1 w-[46px] text-center text-xs rounded-full p ${getPriorityClass(
-                todo.priority
+                todo.priority,
               )}`}
             >
               {todo.priority}
@@ -105,6 +104,7 @@ const TodoItem = ({ todo, project }) => {
               )}
             </span>
           </div>
+
           {project && (
             <span
               className="px-2 py-1 text-xs rounded-full"
@@ -115,64 +115,26 @@ const TodoItem = ({ todo, project }) => {
           )}
         </div>
       </div>
-      <TodoEditModal
-        isOpen={isEditModalOpen}
-        onClose={handleCloseEditModal}
-        todo={todo}
-        onSave={handleSaveEdit}
-      />
 
-      <DeleteModal
-        isOpen={isDeleteModalOpen}
-        onClose={handleCloseDeleteModal}
-        onConfirm={handleDelete}
-      />
+      {isEditModalOpen && (
+        <TodoEditModal
+          isOpen={isEditModalOpen}
+          onClose={handleCloseEditModal}
+          projects={projects}
+          todo={todo}
+          onSave={handleSaveEdit}
+        />
+      )}
+
+      {isDeleteTodoModalOpen && (
+        <DeleteTodoModal
+          isOpen={isDeleteTodoModalOpen}
+          onClose={handleCloseDeleteModal}
+          onConfirm={handleDelete}
+        />
+      )}
     </div>
   );
 };
 
 export default TodoItem;
-
-export const DeleteModal = ({ isOpen, onClose, onConfirm }) => {
-  return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="flex flex-col justify-center max-w-[400px] text-gray-900 min-w dark:text-white p-5 gap-3 md:gap-8">
-        <h3 className="text-xl sm:text-2xl font-bold ">
-          Задання буде видалено!
-        </h3>
-
-        <ModalActions
-          onCancel={onClose}
-          onConfirm={onConfirm}
-          confirmLabel="Видалити"
-          confirmVariant="danger"
-        />
-      </div>
-    </Modal>
-  );
-};
-
-export const TodoActionButtons = ({ onClickEdit, onClickDelete, todoId }) => {
-  return (
-    <div className="flex gap-1">
-      <Button
-        variant="icon"
-        size="icon"
-        data-todo-id={todoId}
-        aria-label="Редагувати завдання"
-        onClick={onClickEdit}
-        icon={FaEdit}
-      ></Button>
-
-      <Button
-        className=" hover:text-red-500"
-        variant="icon"
-        size="icon"
-        data-todo-id={todoId}
-        aria-label="Видалити завдання"
-        onClick={onClickDelete}
-        icon={FaTrashAlt}
-      ></Button>
-    </div>
-  );
-};

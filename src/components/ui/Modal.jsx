@@ -44,7 +44,7 @@ const Modal = ({ children, isOpen, onClose }) => {
         {children}
       </div>
     </div>,
-    modalRoot
+    modalRoot,
   );
 };
 
