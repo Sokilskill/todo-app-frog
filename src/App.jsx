@@ -2,17 +2,43 @@ import "./App.css";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import AddTodoForm from "./components/AddTodoForm";
-import TodoList from "./components/TodoList";
+import TodoSection from "./components/todo/TodoSection";
 
-import { useSelector } from "react-redux";
-import { selectProjects } from "./redux/projects/projectSelector";
-import { filterTodos } from "./redux/filters/filtersSelector";
-import { selectTodos } from "./redux/todos/todosSelector";
+import { useDispatch } from "react-redux";
+import { useEffect, useMemo } from "react";
+import { setScreenSize } from "./redux/ui/uiSlice";
+
+const debounce = (fn, ms) => {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn.apply(this, args), ms);
+  };
+};
 
 function App() {
-  const projects = useSelector(selectProjects);
-  const filteredTodos = useSelector(filterTodos);
-  const allTodos = useSelector(selectTodos);
+  const dispatch = useDispatch();
+
+  const debouncedHandleResize = useMemo(
+    () =>
+      debounce(() => {
+        const width = window.innerWidth;
+        let size = "sm";
+        if (width >= 768) size = "lg";
+        else if (width >= 576) size = "md";
+
+        dispatch(setScreenSize(size));
+      }, 150),
+    [dispatch],
+  );
+
+  useEffect(() => {
+    window.addEventListener("resize", debouncedHandleResize);
+
+    return () => {
+      window.removeEventListener("resize", debouncedHandleResize);
+    };
+  }, [debouncedHandleResize]);
 
   return (
     <>
@@ -24,11 +50,7 @@ function App() {
             <Sidebar />
             <main className="lg:col-span-3 space-y-6">
               <AddTodoForm />
-              <TodoList
-                todoList={filteredTodos}
-                allTodos={allTodos}
-                projects={projects}
-              />
+              <TodoSection />
             </main>
           </div>
         </div>

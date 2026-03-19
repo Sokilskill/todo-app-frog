@@ -6,7 +6,7 @@ import { selectProjects } from "../redux/projects/projectSelector";
 import { addSelectedProjectId } from "../redux/filters/filtersSlice";
 import { addProject, updateProject } from "../redux/projects/projectsSlice";
 
-import Button from "./Button";
+import Button from "./ui/Button";
 import ThemeToggle from "./ThemeToggle";
 
 const Projects = () => {
@@ -28,7 +28,7 @@ const Projects = () => {
     (projectId) => {
       dispatch(addSelectedProjectId(projectId));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const openCreateModal = () => {
