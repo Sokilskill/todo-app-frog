@@ -1,4 +1,8 @@
+[![Read in English](https://img.shields.io/badge/lang-English-blue)](README.md)
+
 # Todo App Frog 🐸
+
+![Home page](/public/screenshot1.png)
 
 Додаток для управління завданнями, розроблений на **React**, **Redux Toolkit** та **Tailwind CSS**. Основний фокус зроблений на чіткій структурі проєктів та зберіганні даних.
 
@@ -22,10 +26,13 @@
 ## 📦 Запуск проєкту
 
 1. **Клонувати репозиторій:**
+
    ```bash
-   git clone [https://github.com/Sokilskill/todo-app-frog.git](https://github.com/Sokilskill/todo-app-frog.git)
+   git clone https://github.com/Sokilskill/todo-app-frog.git
+
    cd todo-app-frog
    ```
+
 2. **Встановити залежності**
    ```bash
     npm install

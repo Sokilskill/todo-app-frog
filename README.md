@@ -1,6 +1,8 @@
+[![Читати українською](https://img.shields.io/badge/мова-Українська-yellow)](README.uk.md)
+
 # Todo App Frog 🐸
 
-[Ukrainian](README.uk.md)
+![Home page](/public/screenshot1.png)
 
 A task management application built with **React**, **Redux Toolkit**, and **Tailwind CSS**. The app focus on organized project-based task management with persistent storage.
 
@@ -24,10 +26,13 @@ A task management application built with **React**, **Redux Toolkit**, and **Tai
 ## 📦 Getting Started
 
 1. **Clone the repository:**
+
    ```bash
-   git clone [https://github.com/Sokilskill/todo-app-frog.git](https://github.com/Sokilskill/todo-app-frog.git)
+   git clone https://github.com/Sokilskill/todo-app-frog.git
+
    cd todo-app-frog
    ```
+
 2. **Install dependencies:**
    ```bash
     npm install
